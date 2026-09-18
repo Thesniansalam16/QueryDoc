@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from dotenv import load_dotenv
 from google import genai
@@ -12,9 +13,9 @@ from pdf_processor import extract_pdf_pages
 from chatbot_config import SYSTEM_PROMPT
 
 
-# ============================================================
-# LOAD ENVIRONMENT
-# ============================================================
+# =========================================================
+# ENVIRONMENT
+# =========================================================
 
 load_dotenv()
 
@@ -31,10 +32,6 @@ EMBEDDING_MODEL = os.getenv(
 )
 
 
-# ============================================================
-# API KEY CHECK
-# ============================================================
-
 if not GEMINI_API_KEY:
     raise ValueError(
         "GEMINI_API_KEY is missing. "
@@ -42,18 +39,14 @@ if not GEMINI_API_KEY:
     )
 
 
-# ============================================================
-# GEMINI CLIENT
-# ============================================================
-
 client = genai.Client(
     api_key=GEMINI_API_KEY
 )
 
 
-# ============================================================
-# LANGCHAIN GEMINI EMBEDDINGS
-# ============================================================
+# =========================================================
+# EMBEDDINGS
+# =========================================================
 
 embeddings = GoogleGenerativeAIEmbeddings(
     model=EMBEDDING_MODEL,
@@ -62,9 +55,9 @@ embeddings = GoogleGenerativeAIEmbeddings(
 )
 
 
-# ============================================================
-# LANGCHAIN TEXT SPLITTER
-# ============================================================
+# =========================================================
+# TEXT SPLITTER
+# =========================================================
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1200,
@@ -79,22 +72,69 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 
-# ============================================================
-# CHROMA VECTOR DATABASE
-# ============================================================
+# =========================================================
+# VECTOR DATABASE
+# =========================================================
 
 VECTOR_DB_PATH = "vector_db"
 
+COLLECTION_NAME = "querydoc_documents"
+
+
 vector_store = Chroma(
-    collection_name="querydoc_documents",
+    collection_name=COLLECTION_NAME,
     embedding_function=embeddings,
     persist_directory=VECTOR_DB_PATH
 )
 
 
-# ============================================================
+# =========================================================
+# DELETE VECTOR DATABASE
+# =========================================================
+
+def clear_vector_database():
+
+    global vector_store
+
+    try:
+        # Delete current collection
+        vector_store.delete_collection()
+
+    except Exception as e:
+        print(
+            "Vector collection delete warning:",
+            str(e)
+        )
+
+    # Remove complete Chroma folder
+    if os.path.exists(VECTOR_DB_PATH):
+
+        try:
+            shutil.rmtree(VECTOR_DB_PATH)
+
+        except Exception as e:
+            print(
+                "Vector DB folder delete warning:",
+                str(e)
+            )
+
+    # Recreate empty folder
+    os.makedirs(
+        VECTOR_DB_PATH,
+        exist_ok=True
+    )
+
+    # Create fresh Chroma store
+    vector_store = Chroma(
+        collection_name=COLLECTION_NAME,
+        embedding_function=embeddings,
+        persist_directory=VECTOR_DB_PATH
+    )
+
+
+# =========================================================
 # INDEX PDF
-# ============================================================
+# =========================================================
 
 def index_pdf(pdf_path, document_name):
 
@@ -106,6 +146,7 @@ def index_pdf(pdf_path, document_name):
     for page_data in pages:
 
         page_number = page_data["page"]
+
         page_text = page_data["text"]
 
         if not page_text.strip():
@@ -152,9 +193,9 @@ def index_pdf(pdf_path, document_name):
     }
 
 
-# ============================================================
+# =========================================================
 # SEARCH DOCUMENT
-# ============================================================
+# =========================================================
 
 def search_document(question, top_k=5):
 
@@ -182,9 +223,9 @@ def search_document(question, top_k=5):
     return retrieved
 
 
-# ============================================================
+# =========================================================
 # GENERATE ANSWER
-# ============================================================
+# =========================================================
 
 def generate_answer(question):
 
@@ -203,6 +244,7 @@ def generate_answer(question):
             "sources": []
         }
 
+
     context_parts = []
 
     for item in retrieved_chunks:
@@ -219,9 +261,11 @@ CONTENT:
 """
         )
 
+
     context = "\n\n".join(
         context_parts
     )
+
 
     prompt = f"""
 {SYSTEM_PROMPT}
@@ -234,15 +278,14 @@ provided below.
 
 STRICT RULES:
 
-1. Answer ONLY using information from
-   the uploaded document.
+1. Answer ONLY using the uploaded document.
 
 2. Do NOT use outside knowledge.
 
 3. Do NOT invent or guess information.
 
-4. If the information is not available
-   in the retrieved context, say:
+4. If the information is not available,
+say:
 
 "I couldn't find this information
 in the uploaded document."
@@ -250,28 +293,25 @@ in the uploaded document."
 5. Give clear and accurate answers.
 
 6. Preserve numerical values exactly
-   as they appear in the document.
+as they appear in the document.
 
 7. For comparison questions, use only
-   values available in the document.
+values available in the document.
 
 8. Mention relevant page numbers.
 
 9. Do not answer unrelated questions.
 
 10. Do not pretend to know information
-    that is not present in the document.
-
+that is not present in the document.
 
 RETRIEVED DOCUMENT CONTEXT:
 
 {context}
 
-
 USER QUESTION:
 
 {question}
-
 
 Answer using ONLY the retrieved
 document context.
@@ -283,10 +323,12 @@ Sources:
 - Page Y
 """
 
+
     response = client.models.generate_content(
         model=GEMINI_MODEL,
         contents=prompt
     )
+
 
     sources = []
 
@@ -298,7 +340,9 @@ Sources:
         }
 
         if source not in sources:
+
             sources.append(source)
+
 
     return {
         "answer": response.text,
