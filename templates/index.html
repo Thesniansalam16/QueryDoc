@@ -8,62 +8,60 @@
 
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            color: #1f2937;
+            background: #f4f7fb;
+            color: #172033;
             min-height: 100vh;
         }
 
         /* =========================
            HEADER
-        ========================== */
+        ========================= */
 
-        .topbar {
-            height: 70px;
+        .header {
+            height: 72px;
             background: white;
             border-bottom: 1px solid #e5e7eb;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
-            position: sticky;
-            top: 0;
-            z-index: 20;
+            padding: 0 34px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 13px;
         }
 
         .brand-icon {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
+            background: linear-gradient(135deg, #6366f1, #7c3aed);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 21px;
+            color: white;
+            font-size: 22px;
             font-weight: bold;
         }
 
-        .brand-text h1 {
+        .brand-title {
             font-size: 20px;
+            font-weight: 700;
             color: #111827;
         }
 
-        .brand-text p {
+        .brand-subtitle {
             font-size: 12px;
-            color: #6b7280;
+            color: #64748b;
             margin-top: 2px;
         }
 
@@ -71,135 +69,132 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13px;
             color: #16a34a;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .status-dot {
-            width: 9px;
-            height: 9px;
-            background: #22c55e;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            background: #22c55e;
         }
 
         /* =========================
            MAIN
-        ========================== */
+        ========================= */
 
         .main {
-            max-width: 1100px;
-            margin: auto;
-            padding: 35px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 34px 20px 50px;
         }
 
         .hero {
             text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .hero h2 {
-            font-size: 32px;
-            color: #111827;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        /* =========================
-           UPLOAD CARD
-        ========================== */
-
-        .upload-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 28px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
 
-        .upload-title {
+        .hero h1 {
+            font-size: 34px;
+            color: #111827;
+            margin-bottom: 9px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: #64748b;
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .main-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+        }
+
+        .section {
+            padding: 25px 30px;
+        }
+
+        .section-title {
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 6px;
+            color: #172033;
+            margin-bottom: 5px;
         }
 
-        .upload-subtitle {
-            color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 20px;
+        .section-description {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 18px;
         }
+
+        /* =========================
+           UPLOAD AREA
+        ========================= */
 
         .upload-area {
-            border: 2px dashed #c7d2fe;
+            border: 2px dashed #b8c5ff;
             background: #f8faff;
-            border-radius: 18px;
-            min-height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 15px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
-            transition: 0.25s;
-            padding: 25px;
+            transition: 0.2s ease;
         }
 
         .upload-area:hover {
             border-color: #6366f1;
-            background: #f4f4ff;
+            background: #f5f6ff;
         }
 
         .upload-area.dragover {
-            border-color: #4f46e5;
+            border-color: #6366f1;
             background: #eef2ff;
-            transform: scale(1.01);
-        }
-
-        .upload-content {
-            max-width: 500px;
         }
 
         .upload-icon {
-            width: 75px;
-            height: 75px;
-            border-radius: 20px;
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
             background: #eef2ff;
             color: #6366f1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            margin: 0 auto 18px;
+            margin: 0 auto 14px;
+            font-size: 28px;
         }
 
-        .upload-content h3 {
+        .upload-title {
             font-size: 18px;
-            margin-bottom: 8px;
-            color: #111827;
+            font-weight: 700;
+            color: #172033;
+            margin-bottom: 7px;
         }
 
-        .upload-content p {
-            color: #6b7280;
+        .upload-text {
             font-size: 13px;
-            margin-bottom: 18px;
+            color: #64748b;
+            margin-bottom: 16px;
         }
 
         .choose-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 22px;
+            border: none;
             background: #6366f1;
             color: white;
-            border-radius: 10px;
+            padding: 11px 22px;
+            border-radius: 9px;
             font-size: 14px;
             font-weight: 600;
-            border: none;
             cursor: pointer;
-            transition: 0.2s;
         }
 
         .choose-btn:hover {
@@ -211,104 +206,111 @@
         }
 
         .upload-info {
-            margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 18px;
-            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 13px;
+            color: #64748b;
             font-size: 12px;
-            color: #6b7280;
+            flex-wrap: wrap;
         }
 
         /* =========================
            PROGRESS
-        ========================== */
+        ========================= */
 
         .progress-box {
             display: none;
-            margin-top: 20px;
+            margin-top: 18px;
         }
 
         .progress-text {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
-            margin-bottom: 8px;
+            color: #475569;
+            margin-bottom: 7px;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 9px;
+        .progress-track {
+            height: 8px;
             background: #e5e7eb;
-            border-radius: 20px;
+            border-radius: 10px;
             overflow: hidden;
         }
 
-        .progress-fill {
+        .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
-            transition: width 0.2s;
+            background: #6366f1;
+            border-radius: 10px;
+            transition: width 0.2s ease;
         }
 
         /* =========================
            DOCUMENT CARD
-        ========================== */
+        ========================= */
 
         .document-card {
             display: none;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            padding: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            margin-bottom: 25px;
+            margin-top: 18px;
+            border: 1px solid #dbeafe;
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 15px;
         }
 
-        .document-header {
+        .document-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             gap: 15px;
         }
 
         .document-info {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            min-width: 0;
         }
 
         .pdf-icon {
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             background: #fee2e2;
-            color: #dc2626;
-            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
         .document-name {
+            font-size: 14px;
             font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 5px;
+            color: #172033;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .document-meta {
             font-size: 12px;
-            color: #6b7280;
+            color: #64748b;
+            margin-top: 4px;
         }
 
         .delete-btn {
             border: 1px solid #fecaca;
-            background: #fff;
+            background: white;
             color: #dc2626;
-            padding: 9px 15px;
-            border-radius: 9px;
+            padding: 8px 13px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
         }
 
         .delete-btn:hover {
@@ -316,147 +318,76 @@
         }
 
         /* =========================
-           CHAT
-        ========================== */
+           DIVIDER
+        ========================= */
 
-        .chat-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-        }
-
-        .chat-header {
-            padding: 18px 22px;
-            border-bottom: 1px solid #e5e7eb;
-            font-weight: 700;
-        }
-
-        .chat-body {
-            height: 480px;
-            overflow-y: auto;
-            padding: 25px;
-        }
-
-        .welcome {
-            text-align: center;
-            padding: 70px 20px;
-            color: #6b7280;
-        }
-
-        .welcome-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
-        .welcome h3 {
-            color: #111827;
-            margin-bottom: 8px;
-        }
-
-        .suggestions {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .suggestion {
-            border: 1px solid #ddd6fe;
-            background: #fafafa;
-            color: #4f46e5;
-            padding: 9px 13px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .suggestion:hover {
-            background: #eef2ff;
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: 18px;
-        }
-
-        .message.user {
-            justify-content: flex-end;
-        }
-
-        .message-content {
-            max-width: 75%;
-            padding: 13px 16px;
-            border-radius: 15px;
-            font-size: 14px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-        }
-
-        .message.assistant .message-content {
-            background: #f3f4f6;
-            color: #1f2937;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message.user .message-content {
-            background: #6366f1;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .source-box {
-            margin-top: 10px;
-            font-size: 11px;
-            color: #6b7280;
-        }
-
-        .source-page {
-            display: inline-block;
-            background: #eef2ff;
-            color: #4f46e5;
-            padding: 4px 8px;
-            border-radius: 8px;
-            margin: 3px;
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 0 30px;
         }
 
         /* =========================
-           INPUT
-        ========================== */
+           QUESTION SECTION
+        ========================= */
 
-        .chat-input-area {
-            border-top: 1px solid #e5e7eb;
-            padding: 15px;
+        .question-section {
+            padding: 25px 30px 30px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #172033;
+            margin-bottom: 6px;
+        }
+
+        .question-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .question-box {
             display: flex;
+            align-items: center;
             gap: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            padding: 7px;
+            background: white;
+            transition: 0.2s ease;
+        }
+
+        .question-box:focus-within {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
         }
 
         #messageInput {
             flex: 1;
-            resize: none;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            padding: 13px 15px;
-            font-size: 14px;
+            border: none;
             outline: none;
-            min-height: 48px;
-            max-height: 130px;
+            padding: 12px;
+            font-size: 14px;
+            color: #172033;
+            background: transparent;
         }
 
-        #messageInput:focus {
-            border-color: #6366f1;
+        #messageInput::placeholder {
+            color: #94a3b8;
         }
 
         #sendBtn {
-            width: 52px;
             border: none;
-            border-radius: 12px;
             background: #6366f1;
             color: white;
-            font-size: 19px;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         #sendBtn:hover {
@@ -464,80 +395,221 @@
         }
 
         #sendBtn:disabled {
-            background: #c7d2fe;
+            opacity: 0.6;
             cursor: not-allowed;
         }
 
         /* =========================
+           SUGGESTIONS
+        ========================= */
+
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .suggestion {
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            border-radius: 20px;
+            padding: 7px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .suggestion:hover {
+            border-color: #c7d2fe;
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        /* =========================
+           ANSWER
+        ========================= */
+
+        .answer-area {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .answer-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .answer-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 17px;
+            line-height: 1.65;
+            font-size: 14px;
+            color: #334155;
+            white-space: pre-wrap;
+        }
+
+        .sources {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8faff;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .sources strong {
+            color: #172033;
+        }
+
+        /* =========================
            TYPING
-        ========================== */
+        ========================= */
 
         .typing {
             display: none;
-            padding: 10px 15px;
-            color: #6b7280;
+            margin-top: 15px;
+            color: #64748b;
+            font-size: 13px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #6366f1;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* =========================
+           EMPTY QUESTION STATE
+        ========================= */
+
+        .question-disabled {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
+        .upload-required {
+            text-align: center;
+            padding: 14px;
+            background: #f8fafc;
+            color: #64748b;
+            border-radius: 10px;
             font-size: 13px;
         }
 
         /* =========================
            TOAST
-        ========================== */
+        ========================= */
 
         .toast {
             position: fixed;
-            right: 25px;
-            bottom: 25px;
-            background: #111827;
+            right: 22px;
+            bottom: 22px;
+            max-width: 360px;
+            background: #172033;
             color: white;
-            padding: 13px 18px;
+            padding: 13px 17px;
             border-radius: 10px;
             font-size: 13px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: none;
-            z-index: 100;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 9999;
         }
 
         /* =========================
            RESPONSIVE
-        ========================== */
+        ========================= */
 
         @media (max-width: 700px) {
 
-            .topbar {
-                padding: 0 15px;
+            .header {
+                padding: 0 16px;
             }
 
             .status {
-                display: none;
+                font-size: 12px;
             }
 
             .main {
-                padding: 20px 12px;
+                padding: 22px 12px 35px;
             }
 
-            .hero h2 {
-                font-size: 25px;
+            .hero h1 {
+                font-size: 27px;
             }
 
-            .upload-card {
-                padding: 18px;
+            .hero p {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .section,
+            .question-section {
+                padding: 20px;
+            }
+
+            .divider {
+                margin: 0 20px;
             }
 
             .upload-area {
-                min-height: 230px;
+                padding: 25px 14px;
             }
 
-            .document-header {
+            .document-row {
                 align-items: flex-start;
             }
 
-            .chat-body {
-                height: 420px;
-                padding: 15px;
+            .document-info {
+                min-width: 0;
             }
 
-            .message-content {
-                max-width: 88%;
+            .question-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #sendBtn {
+                width: 100%;
+            }
+
+            .upload-info {
+                gap: 10px;
             }
         }
     </style>
@@ -545,675 +617,876 @@
 
 <body>
 
-<!-- =========================
-     HEADER
-========================== -->
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-<header class="topbar">
+    <header class="header">
 
-    <div class="brand">
+        <div class="brand">
 
-        <div class="brand-icon">
-            Q
+            <div class="brand-icon">
+                Q
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    QueryDoc AI
+                </div>
+
+                <div class="brand-subtitle">
+                    Document Intelligence Assistant
+                </div>
+            </div>
+
         </div>
 
-        <div class="brand-text">
-            <h1>QueryDoc AI</h1>
-            <p>Document Intelligence Assistant</p>
+        <div class="status">
+            <span class="status-dot"></span>
+            AI Ready
         </div>
 
-    </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        AI Ready
-    </div>
-
-</header>
-
-
-<main class="main">
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <h2>Ask Questions From Your PDF</h2>
-
-        <p>
-            Upload a PDF document and QueryDoc AI will answer
-            questions using only the document content.
-        </p>
-
-    </section>
+    </header>
 
 
     <!-- =========================
-         UPLOAD CARD
-    ========================== -->
+         MAIN
+    ========================= -->
 
-    <section class="upload-card" id="uploadCard">
+    <main class="main">
 
-        <div class="upload-title">
-            Upload your PDF
+        <div class="hero">
+
+            <h1>
+                Ask Questions From Your PDF
+            </h1>
+
+            <p>
+                Upload a PDF and ask questions using only the document content.
+            </p>
+
         </div>
 
-        <div class="upload-subtitle">
-            Select a PDF document to start asking questions.
-        </div>
+
+        <!-- =========================
+             MAIN CARD
+        ========================= -->
+
+        <div class="main-card">
 
 
-        <!-- DROP AREA -->
+            <!-- =========================
+                 UPLOAD SECTION
+            ========================= -->
 
-        <div class="upload-area" id="uploadArea">
+            <section class="section">
 
-            <div class="upload-content">
-
-                <div class="upload-icon">
-                    ↑
+                <div class="section-title">
+                    Upload your PDF
                 </div>
 
-                <h3>
-                    Drag & Drop your PDF here
-                </h3>
-
-                <p>
-                    or click the button below to browse your computer
-                </p>
+                <div class="section-description">
+                    Select a PDF document to start asking questions.
+                </div>
 
 
-                <button
-                    type="button"
-                    class="choose-btn"
-                    id="chooseBtn"
-                >
-                    Choose PDF
-                </button>
-
-                <input
-                    type="file"
-                    id="pdfInput"
-                    accept=".pdf,application/pdf"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="upload-info">
-            <span>📄 PDF only</span>
-            <span>📦 Maximum 25 MB</span>
-            <span>🔒 Document grounded answers</span>
-        </div>
-
-
-        <!-- PROGRESS -->
-
-        <div class="progress-box" id="progressBox">
-
-            <div class="progress-text">
-                <span id="progressText">
-                    Uploading PDF...
-                </span>
-
-                <span id="progressPercent">
-                    0%
-                </span>
-            </div>
-
-            <div class="progress-bar">
+                <!-- Upload Area -->
 
                 <div
-                    class="progress-fill"
-                    id="progressFill"
-                ></div>
+                    class="upload-area"
+                    id="uploadArea"
+                >
 
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         DOCUMENT CARD
-    ========================== -->
-
-    <section
-        class="document-card"
-        id="documentCard"
-    >
-
-        <div class="document-header">
-
-            <div class="document-info">
-
-                <div class="pdf-icon">
-                    PDF
-                </div>
-
-                <div>
-
-                    <div
-                        class="document-name"
-                        id="documentName"
-                    >
-                        document.pdf
+                    <div class="upload-icon">
+                        ↑
                     </div>
 
-                    <div
-                        class="document-meta"
-                        id="documentMeta"
+                    <div class="upload-title">
+                        Drag & Drop your PDF here
+                    </div>
+
+                    <div class="upload-text">
+                        or click the button below to browse your computer
+                    </div>
+
+                    <button
+                        type="button"
+                        class="choose-btn"
+                        id="chooseBtn"
                     >
-                        Document ready
+                        Choose PDF
+                    </button>
+
+                    <input
+                        type="file"
+                        id="pdfInput"
+                        accept=".pdf,application/pdf"
+                    >
+
+                </div>
+
+
+                <!-- Upload Info -->
+
+                <div class="upload-info">
+
+                    <span>📄 PDF only</span>
+
+                    <span>📦 Maximum 25 MB</span>
+
+                    <span>🔒 Document grounded answers</span>
+
+                </div>
+
+
+                <!-- Progress -->
+
+                <div
+                    class="progress-box"
+                    id="progressBox"
+                >
+
+                    <div class="progress-text">
+
+                        <span id="progressText">
+                            Uploading PDF...
+                        </span>
+
+                        <span id="progressPercent">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div
+                            class="progress-bar"
+                            id="progressBar"
+                        ></div>
+
                     </div>
 
                 </div>
 
-            </div>
+
+                <!-- Document Card -->
+
+                <div
+                    class="document-card"
+                    id="documentCard"
+                >
+
+                    <div class="document-row">
+
+                        <div class="document-info">
+
+                            <div class="pdf-icon">
+                                📄
+                            </div>
+
+                            <div>
+
+                                <div
+                                    class="document-name"
+                                    id="documentName"
+                                >
+                                    document.pdf
+                                </div>
+
+                                <div
+                                    class="document-meta"
+                                    id="documentMeta"
+                                >
+                                    PDF uploaded successfully
+                                </div>
+
+                            </div>
+
+                        </div>
 
 
-            <button
-                class="delete-btn"
-                onclick="deleteDocument()"
-            >
-                Delete PDF
-            </button>
+                        <button
+                            type="button"
+                            class="delete-btn"
+                            id="deleteBtn"
+                        >
+                            Delete PDF
+                        </button>
 
-        </div>
+                    </div>
 
-    </section>
-
-
-    <!-- =========================
-         CHAT CARD
-    ========================== -->
-
-    <section class="chat-card">
-
-        <div class="chat-header">
-            💬 QueryDoc AI Chat
-        </div>
-
-
-        <div
-            class="chat-body"
-            id="chatBody"
-        >
-
-            <div
-                class="welcome"
-                id="welcome"
-            >
-
-                <div class="welcome-icon">
-                    📚
                 </div>
 
-                <h3>
-                    Upload a PDF to begin
-                </h3>
-
-                <p>
-                    Once your document is uploaded,
-                    you can ask questions about it here.
-                </p>
+            </section>
 
 
-                <div class="suggestions">
+            <!-- =========================
+                 DIVIDER
+            ========================= -->
+
+            <div class="divider"></div>
+
+
+            <!-- =========================
+                 QUESTION SECTION
+            ========================= -->
+
+            <section class="question-section">
+
+                <div class="question-title">
+                    Ask a question from your PDF
+                </div>
+
+                <div class="question-description">
+                    QueryDoc AI will answer using only the uploaded document.
+                </div>
+
+
+                <!-- Before Upload -->
+
+                <div
+                    class="upload-required"
+                    id="uploadRequired"
+                >
+                    📄 Upload a PDF above to start asking questions.
+                </div>
+
+
+                <!-- Question Box -->
+
+                <div
+                    class="question-box question-disabled"
+                    id="questionBox"
+                >
+
+                    <input
+                        type="text"
+                        id="messageInput"
+                        placeholder="Type your question..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="sendBtn"
+                    >
+                        Send ➤
+                    </button>
+
+                </div>
+
+
+                <!-- Suggestions -->
+
+                <div
+                    class="suggestions question-disabled"
+                    id="suggestions"
+                >
 
                     <button
                         class="suggestion"
-                        onclick="useSuggestion('What is this document about?')"
+                        type="button"
+                        data-question="What is this document about?"
                     >
                         What is this document about?
                     </button>
 
                     <button
                         class="suggestion"
-                        onclick="useSuggestion('Summarize the document')"
+                        type="button"
+                        data-question="What are the key highlights?"
                     >
-                        Summarize the document
+                        Key highlights
                     </button>
 
                     <button
                         class="suggestion"
-                        onclick="useSuggestion('What are the key numbers in this document?')"
+                        type="button"
+                        data-question="What are the important financial figures?"
                     >
-                        Key numbers
+                        Important figures
                     </button>
 
                 </div>
 
-            </div>
+
+                <!-- Typing -->
+
+                <div
+                    class="typing"
+                    id="typing"
+                >
+
+                    <div class="typing-dots">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    QueryDoc AI is thinking...
+
+                </div>
+
+
+                <!-- Answer -->
+
+                <div
+                    class="answer-area"
+                    id="answerArea"
+                >
+
+                    <div class="answer-heading">
+                        🤖 QueryDoc AI Answer
+                    </div>
+
+                    <div
+                        class="answer-card"
+                        id="answerCard"
+                    ></div>
+
+                    <div
+                        class="sources"
+                        id="sources"
+                        style="display:none;"
+                    ></div>
+
+                </div>
+
+            </section>
 
         </div>
 
+    </main>
 
-        <!-- TYPING -->
 
-        <div
-            class="typing"
-            id="typing"
-        >
-            QueryDoc AI is thinking...
-        </div>
+    <!-- Toast -->
 
+    <div
+        class="toast"
+        id="toast"
+    ></div>
 
-        <!-- INPUT -->
 
-        <div class="chat-input-area">
+    <script>
 
-            <textarea
-                id="messageInput"
-                placeholder="Upload a PDF first..."
-                disabled
-            ></textarea>
+        // =====================================================
+        // ELEMENTS
+        // =====================================================
 
-            <button
-                id="sendBtn"
-                onclick="sendMessage()"
-                disabled
-            >
-                ➤
-            </button>
+        const pdfInput = document.getElementById("pdfInput");
 
-        </div>
+        const uploadArea = document.getElementById("uploadArea");
 
-    </section>
+        const chooseBtn = document.getElementById("chooseBtn");
 
-</main>
+        const progressBox = document.getElementById("progressBox");
 
+        const progressBar = document.getElementById("progressBar");
 
-<!-- TOAST -->
+        const progressText = document.getElementById("progressText");
 
-<div
-    class="toast"
-    id="toast"
-></div>
+        const progressPercent = document.getElementById("progressPercent");
 
+        const documentCard = document.getElementById("documentCard");
 
-<script>
+        const documentName = document.getElementById("documentName");
 
-    const pdfInput = document.getElementById("pdfInput");
-    const uploadArea = document.getElementById("uploadArea");
-    const chooseBtn = document.getElementById("chooseBtn");
+        const documentMeta = document.getElementById("documentMeta");
 
-    const uploadCard = document.getElementById("uploadCard");
-    const documentCard = document.getElementById("documentCard");
+        const deleteBtn = document.getElementById("deleteBtn");
 
-    const progressBox = document.getElementById("progressBox");
-    const progressFill = document.getElementById("progressFill");
-    const progressText = document.getElementById("progressText");
-    const progressPercent = document.getElementById("progressPercent");
+        const uploadRequired = document.getElementById("uploadRequired");
 
-    const documentName = document.getElementById("documentName");
-    const documentMeta = document.getElementById("documentMeta");
+        const questionBox = document.getElementById("questionBox");
 
-    const messageInput = document.getElementById("messageInput");
-    const sendBtn = document.getElementById("sendBtn");
+        const suggestions = document.getElementById("suggestions");
 
-    const chatBody = document.getElementById("chatBody");
-    const welcome = document.getElementById("welcome");
-    const typing = document.getElementById("typing");
+        const messageInput = document.getElementById("messageInput");
 
-    const toast = document.getElementById("toast");
+        const sendBtn = document.getElementById("sendBtn");
 
+        const typing = document.getElementById("typing");
 
-    /* =========================
-       PAGE LOAD
-    ========================== */
+        const answerArea = document.getElementById("answerArea");
 
-    document.addEventListener("DOMContentLoaded", () => {
+        const answerCard = document.getElementById("answerCard");
 
-        loadCurrentDocument();
+        const sources = document.getElementById("sources");
 
-    });
+        const toast = document.getElementById("toast");
 
 
-    /* =========================
-       CHOOSE PDF
-    ========================== */
+        // =====================================================
+        // CONVERSATION ID
+        // =====================================================
 
-    chooseBtn.addEventListener("click", (event) => {
+        let conversationId = null;
 
-        event.stopPropagation();
 
-        pdfInput.click();
+        // =====================================================
+        // TOAST
+        // =====================================================
 
-    });
+        function showToast(message) {
 
+            toast.textContent = message;
 
-    uploadArea.addEventListener("click", () => {
+            toast.style.display = "block";
 
-        pdfInput.click();
+            setTimeout(() => {
 
-    });
+                toast.style.display = "none";
 
-
-    /* =========================
-       FILE SELECT
-    ========================== */
-
-    pdfInput.addEventListener("change", () => {
-
-        const file = pdfInput.files[0];
-
-        if (!file) {
-            return;
-        }
-
-        uploadSelectedFile(file);
-
-    });
-
-
-    /* =========================
-       DRAG & DROP
-    ========================== */
-
-    uploadArea.addEventListener("dragover", (event) => {
-
-        event.preventDefault();
-
-        uploadArea.classList.add("dragover");
-
-    });
-
-
-    uploadArea.addEventListener("dragleave", () => {
-
-        uploadArea.classList.remove("dragover");
-
-    });
-
-
-    uploadArea.addEventListener("drop", (event) => {
-
-        event.preventDefault();
-
-        uploadArea.classList.remove("dragover");
-
-        const files = event.dataTransfer.files;
-
-        if (!files || files.length === 0) {
-            return;
-        }
-
-        const file = files[0];
-
-        uploadSelectedFile(file);
-
-    });
-
-
-    /* =========================
-       UPLOAD FILE
-    ========================== */
-
-    function uploadSelectedFile(file) {
-
-        if (!file.name.toLowerCase().endsWith(".pdf")) {
-
-            showToast("Please select a PDF file.");
-
-            return;
+            }, 3500);
         }
 
 
-        const maxSize = 25 * 1024 * 1024;
+        // =====================================================
+        // ENABLE QUESTION AREA
+        // =====================================================
 
-        if (file.size > maxSize) {
+        function enableQuestionArea() {
 
-            showToast("PDF must be smaller than 25 MB.");
+            uploadRequired.style.display = "none";
 
-            return;
+            questionBox.classList.remove("question-disabled");
+
+            suggestions.classList.remove("question-disabled");
+
         }
 
 
-        const formData = new FormData();
+        // =====================================================
+        // DISABLE QUESTION AREA
+        // =====================================================
 
-        formData.append("file", file);
+        function disableQuestionArea() {
 
+            uploadRequired.style.display = "block";
 
-        progressBox.style.display = "block";
+            questionBox.classList.add("question-disabled");
 
-        progressFill.style.width = "0%";
+            suggestions.classList.add("question-disabled");
 
-        progressPercent.textContent = "0%";
+            messageInput.value = "";
 
-        progressText.textContent = "Uploading PDF...";
-
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open("POST", "/upload", true);
+        }
 
 
-        /* Upload progress */
+        // =====================================================
+        // SHOW DOCUMENT
+        // =====================================================
 
-        xhr.upload.addEventListener("progress", (event) => {
+        function showDocument(document) {
 
-            if (event.lengthComputable) {
+            if (!document) {
 
-                const percent =
-                    Math.round(
-                        (event.loaded / event.total) * 100
-                    );
+                documentCard.style.display = "none";
 
-                progressFill.style.width = percent + "%";
+                disableQuestionArea();
 
-                progressPercent.textContent =
-                    percent + "%";
+                return;
+
+            }
+
+
+            documentCard.style.display = "block";
+
+            documentName.textContent = document.filename;
+
+
+            let meta = "";
+
+            if (document.pages) {
+
+                meta += document.pages + " pages";
+
+            }
+
+            if (document.chunks) {
+
+                if (meta) {
+
+                    meta += " • ";
+
+                }
+
+                meta += document.chunks + " chunks";
+
+            }
+
+            if (!meta) {
+
+                meta = "PDF uploaded successfully";
+
+            }
+
+
+            documentMeta.textContent = meta;
+
+            enableQuestionArea();
+
+        }
+
+
+        // =====================================================
+        // CHECK EXISTING DOCUMENT
+        // =====================================================
+
+        async function loadDocument() {
+
+            try {
+
+                const response = await fetch("/document");
+
+                const data = await response.json();
+
+
+                if (data.success && data.document) {
+
+                    showDocument(data.document);
+
+                } else {
+
+                    showDocument(null);
+
+                }
+
+            } catch (error) {
+
+                console.error("Document check error:", error);
+
+            }
+
+        }
+
+
+        // =====================================================
+        // CHOOSE PDF
+        // =====================================================
+
+        chooseBtn.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            pdfInput.click();
+
+        });
+
+
+        // =====================================================
+        // CLICK UPLOAD AREA
+        // =====================================================
+
+        uploadArea.addEventListener("click", function(event) {
+
+            if (event.target === chooseBtn) {
+
+                return;
+
+            }
+
+            pdfInput.click();
+
+        });
+
+
+        // =====================================================
+        // FILE SELECTED
+        // =====================================================
+
+        pdfInput.addEventListener("change", function() {
+
+            if (pdfInput.files.length > 0) {
+
+                uploadPDF(pdfInput.files[0]);
 
             }
 
         });
 
 
-        /* Upload complete */
+        // =====================================================
+        // DRAG OVER
+        // =====================================================
 
-        xhr.onload = function () {
+        uploadArea.addEventListener("dragover", function(event) {
 
-            progressFill.style.width = "100%";
+            event.preventDefault();
 
-            progressPercent.textContent = "100%";
+            uploadArea.classList.add("dragover");
+
+        });
 
 
-            if (xhr.status >= 200 && xhr.status < 300) {
+        // =====================================================
+        // DRAG LEAVE
+        // =====================================================
 
-                let result;
+        uploadArea.addEventListener("dragleave", function() {
 
-                try {
+            uploadArea.classList.remove("dragover");
 
-                    result = JSON.parse(xhr.responseText);
+        });
 
-                } catch (error) {
 
-                    showToast("Invalid server response.");
+        // =====================================================
+        // DROP
+        // =====================================================
 
-                    progressBox.style.display = "none";
+        uploadArea.addEventListener("drop", function(event) {
+
+            event.preventDefault();
+
+            uploadArea.classList.remove("dragover");
+
+
+            const files = event.dataTransfer.files;
+
+
+            if (files.length > 0) {
+
+                uploadPDF(files[0]);
+
+            }
+
+        });
+
+
+        // =====================================================
+        // UPLOAD PDF
+        // =====================================================
+
+        function uploadPDF(file) {
+
+            if (!file) {
+
+                return;
+
+            }
+
+
+            // Check PDF
+
+            const isPDF =
+                file.type === "application/pdf" ||
+                file.name.toLowerCase().endsWith(".pdf");
+
+
+            if (!isPDF) {
+
+                showToast("Please select a PDF file.");
+
+                return;
+
+            }
+
+
+            // Check size
+
+            const maxSize = 25 * 1024 * 1024;
+
+
+            if (file.size > maxSize) {
+
+                showToast("PDF must be smaller than 25 MB.");
+
+                return;
+
+            }
+
+
+            const formData = new FormData();
+
+            formData.append("file", file);
+
+
+            // Reset progress
+
+            progressBox.style.display = "block";
+
+            progressBar.style.width = "0%";
+
+            progressPercent.textContent = "0%";
+
+            progressText.textContent = "Uploading PDF...";
+
+
+            chooseBtn.disabled = true;
+
+
+            const xhr = new XMLHttpRequest();
+
+
+            xhr.open("POST", "/upload", true);
+
+
+            // Progress
+
+            xhr.upload.addEventListener("progress", function(event) {
+
+                if (event.lengthComputable) {
+
+                    const percent = Math.round(
+                        (event.loaded / event.total) * 100
+                    );
+
+
+                    progressBar.style.width = percent + "%";
+
+                    progressPercent.textContent = percent + "%";
+
+
+                    if (percent >= 100) {
+
+                        progressText.textContent =
+                            "Processing PDF and creating document index...";
+
+                    }
+
+                }
+
+            });
+
+
+            // Success / error
+
+            xhr.onreadystatechange = function() {
+
+                if (xhr.readyState !== 4) {
 
                     return;
+
                 }
 
 
-                if (result.success) {
+                chooseBtn.disabled = false;
 
-                    progressText.textContent =
-                        "PDF uploaded successfully!";
+
+                let data;
+
+
+                try {
+
+                    data = JSON.parse(xhr.responseText);
+
+                } catch (error) {
+
+                    data = {
+
+                        success: false,
+
+                        error: "Server returned an invalid response."
+
+                    };
+
+                }
+
+
+                if (xhr.status >= 200 && xhr.status < 300 && data.success) {
+
+                    progressBar.style.width = "100%";
+
+                    progressPercent.textContent = "100%";
+
+                    progressText.textContent = "PDF uploaded successfully.";
+
+
+                    showToast("PDF uploaded successfully.");
+
+
+                    if (data.document) {
+
+                        showDocument(data.document);
+
+                    }
 
 
                     setTimeout(() => {
 
                         progressBox.style.display = "none";
 
-                    }, 800);
+                    }, 1000);
 
-
-                    showToast(
-                        "PDF uploaded successfully."
-                    );
-
-
-                    loadCurrentDocument();
-
-                    enableChat();
 
                 } else {
 
                     progressBox.style.display = "none";
 
+
                     showToast(
-                        result.error ||
-                        "PDF upload failed."
+                        data.error ||
+                        "Server error while uploading file."
                     );
 
                 }
 
-            } else {
+            };
+
+
+            xhr.onerror = function() {
+
+                chooseBtn.disabled = false;
 
                 progressBox.style.display = "none";
 
-                let message =
-                    "Server error while uploading PDF.";
+                showToast(
+                    "Unable to connect to the server."
+                );
 
-                try {
-
-                    const result =
-                        JSON.parse(xhr.responseText);
-
-                    if (result.error) {
-                        message = result.error;
-                    }
-
-                } catch (error) {}
-
-                showToast(message);
-
-            }
-
-        };
+            };
 
 
-        xhr.onerror = function () {
+            xhr.ontimeout = function() {
 
-            progressBox.style.display = "none";
+                chooseBtn.disabled = false;
 
-            showToast(
-                "Could not connect to Flask server."
-            );
+                progressBox.style.display = "none";
 
-        };
+                showToast(
+                    "Upload timed out. Please try a smaller PDF."
+                );
 
-
-        xhr.send(formData);
-
-    }
+            };
 
 
-    /* =========================
-       LOAD CURRENT DOCUMENT
-    ========================== */
-
-    async function loadCurrentDocument() {
-
-        try {
-
-            const response =
-                await fetch("/document");
-
-            const result =
-                await response.json();
+            xhr.timeout = 180000;
 
 
-            if (
-                result.success &&
-                result.document
-            ) {
-
-                showDocument(result.document);
-
-                enableChat();
-
-            } else {
-
-                showUploadState();
-
-                disableChat();
-
-            }
-
-        } catch (error) {
-
-            console.error(error);
-
-            showUploadState();
-
-            disableChat();
+            xhr.send(formData);
 
         }
 
-    }
 
+        // =====================================================
+        // DELETE PDF
+        // =====================================================
 
-    /* =========================
-       SHOW DOCUMENT
-    ========================== */
+        deleteBtn.addEventListener("click", async function() {
 
-    function showDocument(document) {
-
-        uploadCard.style.display = "none";
-
-        documentCard.style.display = "block";
-
-
-        documentName.textContent =
-            document.filename;
-
-
-        documentMeta.textContent =
-            `${document.pages} pages • ${document.chunks} chunks • Ready for questions`;
-
-    }
-
-
-    /* =========================
-       SHOW UPLOAD
-    ========================== */
-
-    function showUploadState() {
-
-        uploadCard.style.display = "block";
-
-        documentCard.style.display = "none";
-
-    }
-
-
-    /* =========================
-       DELETE DOCUMENT
-    ========================== */
-
-    async function deleteDocument() {
-
-        const confirmDelete =
-            confirm(
-                "Delete the current PDF?\n\n" +
-                "You will need to upload another PDF before asking questions."
+            const confirmed = confirm(
+                "Are you sure you want to delete the current PDF?"
             );
 
 
-        if (!confirmDelete) {
-            return;
-        }
+            if (!confirmed) {
+
+                return;
+
+            }
 
 
-        try {
+            deleteBtn.disabled = true;
 
-            const response =
-                await fetch(
+            deleteBtn.textContent = "Deleting...";
+
+
+            try {
+
+                const response = await fetch(
                     "/delete-document",
                     {
                         method: "DELETE"
@@ -1221,446 +1494,258 @@
                 );
 
 
-            const result =
-                await response.json();
+                const data = await response.json();
 
 
-            if (result.success) {
+                if (response.ok && data.success) {
+
+                    documentCard.style.display = "none";
+
+                    disableQuestionArea();
+
+
+                    answerArea.style.display = "none";
+
+                    answerCard.textContent = "";
+
+                    sources.style.display = "none";
+
+                    conversationId = null;
+
+
+                    showToast("PDF deleted successfully.");
+
+                } else {
+
+                    showToast(
+                        data.error ||
+                        "Unable to delete PDF."
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
 
                 showToast(
-                    "PDF deleted successfully."
+                    "Server error while deleting PDF."
                 );
 
-                showUploadState();
+            } finally {
 
-                disableChat();
+                deleteBtn.disabled = false;
 
-                clearChat();
-
-            } else {
-
-                showToast(
-                    result.error ||
-                    "Could not delete PDF."
-                );
+                deleteBtn.textContent = "Delete PDF";
 
             }
 
-        } catch (error) {
-
-            console.error(error);
-
-            showToast(
-                "Server error while deleting PDF."
-            );
-
-        }
-
-    }
+        });
 
 
-    /* =========================
-       ENABLE CHAT
-    ========================== */
+        // =====================================================
+        // SEND QUESTION
+        // =====================================================
 
-    function enableChat() {
-
-        messageInput.disabled = false;
-
-        sendBtn.disabled = false;
-
-        messageInput.placeholder =
-            "Ask a question about your PDF...";
-
-    }
+        sendBtn.addEventListener("click", sendQuestion);
 
 
-    /* =========================
-       DISABLE CHAT
-    ========================== */
+        // =====================================================
+        // ENTER KEY
+        // =====================================================
 
-    function disableChat() {
+        messageInput.addEventListener("keydown", function(event) {
 
-        messageInput.disabled = true;
+            if (event.key === "Enter") {
 
-        sendBtn.disabled = true;
+                event.preventDefault();
 
-        messageInput.placeholder =
-            "Upload a PDF first...";
+                sendQuestion();
 
-    }
+            }
 
-
-    /* =========================
-       SEND MESSAGE
-    ========================== */
-
-    async function sendMessage() {
-
-        const question =
-            messageInput.value.trim();
+        });
 
 
-        if (!question) {
-            return;
-        }
+        // =====================================================
+        // SUGGESTION BUTTONS
+        // =====================================================
+
+        document.querySelectorAll(".suggestion").forEach(function(button) {
+
+            button.addEventListener("click", function() {
+
+                const question = button.dataset.question;
+
+                messageInput.value = question;
+
+                messageInput.focus();
+
+                sendQuestion();
+
+            });
+
+        });
 
 
-        if (messageInput.disabled) {
+        // =====================================================
+        // SEND QUESTION FUNCTION
+        // =====================================================
 
-            showToast(
-                "Please upload a PDF first."
-            );
+        async function sendQuestion() {
 
-            return;
-
-        }
+            const question = messageInput.value.trim();
 
 
-        addMessage(
-            question,
-            "user"
-        );
+            if (!question) {
+
+                showToast("Please enter a question.");
+
+                return;
+
+            }
 
 
-        messageInput.value = "";
+            sendBtn.disabled = true;
 
-        autoResize();
+            messageInput.disabled = true;
 
-        showTyping();
+            typing.style.display = "flex";
+
+            answerArea.style.display = "none";
 
 
-        try {
+            try {
 
-            const response =
-                await fetch(
+                const response = await fetch(
                     "/chat",
                     {
                         method: "POST",
 
                         headers: {
-                            "Content-Type":
-                                "application/json"
+                            "Content-Type": "application/json"
                         },
 
                         body: JSON.stringify({
-                            question: question
+
+                            question: question,
+
+                            conversation_id: conversationId
+
                         })
                     }
                 );
 
 
-            const result =
-                await response.json();
+                const data = await response.json();
 
 
-            hideTyping();
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.error ||
+                        "Unable to get answer."
+                    );
+
+                }
 
 
-            if (result.success) {
+                // Conversation ID
 
-                addMessage(
-                    result.answer,
-                    "assistant",
-                    result.sources || []
+                if (data.conversation_id) {
+
+                    conversationId = data.conversation_id;
+
+                }
+
+
+                // Answer
+
+                answerCard.textContent =
+                    data.answer ||
+                    "I couldn't find this information in the uploaded document.";
+
+
+                // Sources
+
+                if (
+                    data.sources &&
+                    data.sources.length > 0
+                ) {
+
+                    let sourceHTML = "<strong>Sources:</strong><br>";
+
+                    data.sources.forEach(function(source) {
+
+                        sourceHTML +=
+                            "• " +
+                            (source.document || "Document") +
+                            " — Page " +
+                            (source.page || "N/A") +
+                            "<br>";
+
+                    });
+
+
+                    sources.innerHTML = sourceHTML;
+
+                    sources.style.display = "block";
+
+                } else {
+
+                    sources.style.display = "none";
+
+                }
+
+
+                answerArea.style.display = "block";
+
+
+                // Keep answer visible without moving to another section
+
+                answerArea.scrollIntoView({
+
+                    behavior: "smooth",
+
+                    block: "nearest"
+
+                });
+
+
+                messageInput.value = "";
+
+
+            } catch (error) {
+
+                console.error("Chat error:", error);
+
+                showToast(
+                    error.message ||
+                    "Something went wrong."
                 );
 
-            } else {
+            } finally {
 
-                addMessage(
-                    result.error ||
-                    "Something went wrong.",
-                    "assistant"
-                );
+                sendBtn.disabled = false;
 
-            }
+                messageInput.disabled = false;
 
-        } catch (error) {
+                typing.style.display = "none";
 
-            hideTyping();
-
-            console.error(error);
-
-            addMessage(
-                "Unable to connect to the server.",
-                "assistant"
-            );
-
-        }
-
-    }
-
-
-    /* =========================
-       ADD MESSAGE
-    ========================== */
-
-    function addMessage(
-        text,
-        role,
-        sources = []
-    ) {
-
-        if (welcome) {
-
-            welcome.style.display =
-                "none";
-
-        }
-
-
-        const message =
-            document.createElement("div");
-
-        message.className =
-            `message ${role}`;
-
-
-        const content =
-            document.createElement("div");
-
-        content.className =
-            "message-content";
-
-
-        content.textContent =
-            text;
-
-
-        message.appendChild(content);
-
-
-        if (
-            role === "assistant" &&
-            sources.length > 0
-        ) {
-
-            const sourceBox =
-                document.createElement("div");
-
-            sourceBox.className =
-                "source-box";
-
-
-            sourceBox.innerHTML =
-                "<strong>Sources:</strong>";
-
-
-            sources.forEach(source => {
-
-                const page =
-                    document.createElement("span");
-
-                page.className =
-                    "source-page";
-
-                page.textContent =
-                    `Page ${source.page}`;
-
-                sourceBox.appendChild(page);
-
-            });
-
-
-            content.appendChild(sourceBox);
-
-        }
-
-
-        chatBody.appendChild(message);
-
-        scrollToBottom();
-
-    }
-
-
-    /* =========================
-       SUGGESTION
-    ========================== */
-
-    function useSuggestion(text) {
-
-        if (messageInput.disabled) {
-
-            showToast(
-                "Please upload a PDF first."
-            );
-
-            return;
-
-        }
-
-
-        messageInput.value = text;
-
-        autoResize();
-
-        messageInput.focus();
-
-    }
-
-
-    /* =========================
-       TYPING
-    ========================== */
-
-    function showTyping() {
-
-        typing.style.display =
-            "block";
-
-        scrollToBottom();
-
-    }
-
-
-    function hideTyping() {
-
-        typing.style.display =
-            "none";
-
-    }
-
-
-    /* =========================
-       CLEAR CHAT
-    ========================== */
-
-    function clearChat() {
-
-        chatBody.innerHTML = `
-            <div class="welcome" id="welcome">
-
-                <div class="welcome-icon">
-                    📚
-                </div>
-
-                <h3>
-                    Upload a PDF to begin
-                </h3>
-
-                <p>
-                    Once your document is uploaded,
-                    you can ask questions about it here.
-                </p>
-
-                <div class="suggestions">
-
-                    <button
-                        class="suggestion"
-                        onclick="useSuggestion('What is this document about?')"
-                    >
-                        What is this document about?
-                    </button>
-
-                    <button
-                        class="suggestion"
-                        onclick="useSuggestion('Summarize the document')"
-                    >
-                        Summarize the document
-                    </button>
-
-                    <button
-                        class="suggestion"
-                        onclick="useSuggestion('What are the key numbers in this document?')"
-                    >
-                        Key numbers
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    }
-
-
-    /* =========================
-       TEXTAREA
-    ========================== */
-
-    messageInput.addEventListener(
-        "input",
-        autoResize
-    );
-
-
-    function autoResize() {
-
-        messageInput.style.height =
-            "auto";
-
-        messageInput.style.height =
-            Math.min(
-                messageInput.scrollHeight,
-                130
-            ) + "px";
-
-    }
-
-
-    /* =========================
-       ENTER TO SEND
-    ========================== */
-
-    messageInput.addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                sendMessage();
+                messageInput.focus();
 
             }
 
         }
-    );
 
 
-    /* =========================
-       SCROLL
-    ========================== */
+        // =====================================================
+        // INITIAL LOAD
+        // =====================================================
 
-    function scrollToBottom() {
+        loadDocument();
 
-        setTimeout(() => {
-
-            chatBody.scrollTop =
-                chatBody.scrollHeight;
-
-        }, 50);
-
-    }
-
-
-    /* =========================
-       TOAST
-    ========================== */
-
-    function showToast(message) {
-
-        toast.textContent =
-            message;
-
-        toast.style.display =
-            "block";
-
-
-        setTimeout(() => {
-
-            toast.style.display =
-                "none";
-
-        }, 3500);
-
-    }
-
-</script>
+    </script>
 
 </body>
 </html>
