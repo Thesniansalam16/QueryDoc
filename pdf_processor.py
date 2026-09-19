@@ -1,26 +1,43 @@
-import pymupdf
+import fitz
 
 
 def extract_pdf_pages(pdf_path):
 
-    document = pymupdf.open(pdf_path)
-
     pages = []
 
-    for page_number, page in enumerate(
-        document,
-        start=1
-    ):
+    document = fitz.open(pdf_path)
 
-        text = page.get_text("text")
 
-        if text and text.strip():
+    try:
+
+        for page_number in range(
+            len(document)
+        ):
+
+            page = document[
+                page_number
+            ]
+
+
+            text = page.get_text(
+                "text"
+            )
+
 
             pages.append({
-                "page": page_number,
-                "text": text.strip()
+
+                "page":
+                    page_number + 1,
+
+                "text":
+                    text
+
             })
 
-    document.close()
+
+    finally:
+
+        document.close()
+
 
     return pages
