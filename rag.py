@@ -4,22 +4,33 @@ import shutil
 from dotenv import load_dotenv
 from google import genai
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_google_genai import (
+    GoogleGenerativeAIEmbeddings
+)
+
+from langchain_text_splitters import (
+    RecursiveCharacterTextSplitter
+)
+
 from langchain_chroma import Chroma
+
 from langchain_core.documents import Document
 
 from pdf_processor import extract_pdf_pages
+
 from chatbot_config import SYSTEM_PROMPT
 
 
-# =========================================================
+# ============================================================
 # ENVIRONMENT
-# =========================================================
+# ============================================================
 
 load_dotenv()
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+GEMINI_API_KEY = os.getenv(
+    "GEMINI_API_KEY"
+)
 
 GEMINI_MODEL = os.getenv(
     "GEMINI_MODEL",
@@ -32,36 +43,51 @@ EMBEDDING_MODEL = os.getenv(
 )
 
 
+# ============================================================
+# API KEY CHECK
+# ============================================================
+
 if not GEMINI_API_KEY:
+
     raise ValueError(
         "GEMINI_API_KEY is missing. "
-        "Please add GEMINI_API_KEY to your .env file."
+        "Please add it to your .env file."
     )
 
+
+# ============================================================
+# GEMINI CLIENT
+# ============================================================
 
 client = genai.Client(
     api_key=GEMINI_API_KEY
 )
 
 
-# =========================================================
+# ============================================================
 # EMBEDDINGS
-# =========================================================
+# ============================================================
 
 embeddings = GoogleGenerativeAIEmbeddings(
+
     model=EMBEDDING_MODEL,
+
     google_api_key=GEMINI_API_KEY,
+
     output_dimensionality=768
 )
 
 
-# =========================================================
+# ============================================================
 # TEXT SPLITTER
-# =========================================================
+# ============================================================
 
 text_splitter = RecursiveCharacterTextSplitter(
+
     chunk_size=1200,
+
     chunk_overlap=200,
+
     separators=[
         "\n\n",
         "\n",
@@ -72,9 +98,9 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 
-# =========================================================
+# ============================================================
 # VECTOR DATABASE
-# =========================================================
+# ============================================================
 
 VECTOR_DB_PATH = "vector_db"
 
@@ -82,66 +108,90 @@ COLLECTION_NAME = "querydoc_documents"
 
 
 vector_store = Chroma(
+
     collection_name=COLLECTION_NAME,
+
     embedding_function=embeddings,
+
     persist_directory=VECTOR_DB_PATH
 )
 
 
-# =========================================================
-# DELETE VECTOR DATABASE
-# =========================================================
+# ============================================================
+# CLEAR VECTOR DATABASE
+# ============================================================
 
 def clear_vector_database():
 
     global vector_store
 
+
     try:
-        # Delete current collection
+
         vector_store.delete_collection()
 
     except Exception as e:
+
         print(
             "Vector collection delete warning:",
             str(e)
         )
 
-    # Remove complete Chroma folder
+
     if os.path.exists(VECTOR_DB_PATH):
 
         try:
-            shutil.rmtree(VECTOR_DB_PATH)
+
+            shutil.rmtree(
+                VECTOR_DB_PATH
+            )
 
         except Exception as e:
+
             print(
                 "Vector DB folder delete warning:",
                 str(e)
             )
 
-    # Recreate empty folder
+
     os.makedirs(
         VECTOR_DB_PATH,
         exist_ok=True
     )
 
-    # Create fresh Chroma store
+
     vector_store = Chroma(
+
         collection_name=COLLECTION_NAME,
+
         embedding_function=embeddings,
+
         persist_directory=VECTOR_DB_PATH
     )
 
 
-# =========================================================
+# ============================================================
 # INDEX PDF
-# =========================================================
+# ============================================================
 
-def index_pdf(pdf_path, document_name):
+def index_pdf(
+    pdf_path,
+    document_name
+):
 
-    pages = extract_pdf_pages(pdf_path)
+    print()
+    print("INDEXING:", document_name)
+
+
+    pages = extract_pdf_pages(
+        pdf_path
+    )
+
 
     documents = []
+
     ids = []
+
 
     for page_data in pages:
 
@@ -149,28 +199,44 @@ def index_pdf(pdf_path, document_name):
 
         page_text = page_data["text"]
 
+
         if not page_text.strip():
+
             continue
+
 
         chunks = text_splitter.split_text(
             page_text
         )
 
+
         for chunk_index, chunk in enumerate(chunks):
 
             if not chunk.strip():
+
                 continue
 
+
             document = Document(
+
                 page_content=chunk,
+
                 metadata={
+
                     "page": page_number,
+
                     "document": document_name,
+
                     "chunk_index": chunk_index
+
                 }
             )
 
-            documents.append(document)
+
+            documents.append(
+                document
+            )
+
 
             chunk_id = (
                 f"{document_name}_"
@@ -178,54 +244,99 @@ def index_pdf(pdf_path, document_name):
                 f"{chunk_index}"
             )
 
-            ids.append(chunk_id)
+
+            ids.append(
+                chunk_id
+            )
+
+
+    # --------------------------------------------------------
+    # ADD TO CHROMA
+    # --------------------------------------------------------
 
     if documents:
 
         vector_store.add_documents(
+
             documents=documents,
+
             ids=ids
         )
 
+
+    print(
+        "Pages:",
+        len(pages)
+    )
+
+    print(
+        "Chunks:",
+        len(documents)
+    )
+
+
     return {
+
         "pages": len(pages),
+
         "chunks": len(documents)
+
     }
 
 
-# =========================================================
+# ============================================================
 # SEARCH DOCUMENT
-# =========================================================
+# ============================================================
 
-def search_document(question, top_k=5):
+def search_document(
+    question,
+    top_k=5
+):
 
     retriever = vector_store.as_retriever(
+
         search_type="similarity",
+
         search_kwargs={
             "k": top_k
         }
     )
 
-    retrieved_documents = retriever.invoke(
-        question
+
+    retrieved_documents = (
+        retriever.invoke(question)
     )
 
+
     retrieved = []
+
 
     for document in retrieved_documents:
 
         retrieved.append({
-            "text": document.page_content,
-            "page": document.metadata.get("page"),
-            "document": document.metadata.get("document")
+
+            "text":
+                document.page_content,
+
+            "page":
+                document.metadata.get(
+                    "page"
+                ),
+
+            "document":
+                document.metadata.get(
+                    "document"
+                )
+
         })
+
 
     return retrieved
 
 
-# =========================================================
+# ============================================================
 # GENERATE ANSWER
-# =========================================================
+# ============================================================
 
 def generate_answer(question):
 
@@ -234,29 +345,35 @@ def generate_answer(question):
         top_k=5
     )
 
+
     if not retrieved_chunks:
 
         return {
-            "answer": (
+
+            "answer":
                 "I couldn't find this information "
-                "in the uploaded document."
-            ),
+                "in the uploaded document.",
+
             "sources": []
+
         }
 
 
     context_parts = []
 
+
     for item in retrieved_chunks:
 
         context_parts.append(
-            f"""
-DOCUMENT: {item['document']}
 
-PAGE: {item['page']}
+            f"""
+DOCUMENT:
+{item['document']}
+
+PAGE:
+{item['page']}
 
 CONTENT:
-
 {item['text']}
 """
         )
@@ -285,7 +402,7 @@ STRICT RULES:
 3. Do NOT invent or guess information.
 
 4. If the information is not available,
-say:
+say exactly:
 
 "I couldn't find this information
 in the uploaded document."
@@ -305,13 +422,16 @@ values available in the document.
 10. Do not pretend to know information
 that is not present in the document.
 
+
 RETRIEVED DOCUMENT CONTEXT:
 
 {context}
 
+
 USER QUESTION:
 
 {question}
+
 
 Answer using ONLY the retrieved
 document context.
@@ -325,26 +445,42 @@ Sources:
 
 
     response = client.models.generate_content(
+
         model=GEMINI_MODEL,
+
         contents=prompt
     )
 
 
     sources = []
 
+
     for item in retrieved_chunks:
 
         source = {
-            "document": item["document"],
-            "page": item["page"]
+
+            "document":
+                item["document"],
+
+            "page":
+                item["page"]
+
         }
+
 
         if source not in sources:
 
-            sources.append(source)
+            sources.append(
+                source
+            )
 
 
     return {
-        "answer": response.text,
-        "sources": sources
+
+        "answer":
+            response.text,
+
+        "sources":
+            sources
+
     }
